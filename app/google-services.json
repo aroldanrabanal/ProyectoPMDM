@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "610997800490",
+    "project_id": "proyectopmdm-e15ba",
+    "storage_bucket": "proyectopmdm-e15ba.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:610997800490:android:a9df5209aa13f27cc1bd53",
+        "android_client_info": {
+          "package_name": "com.company.findme"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDAUlod3YayFTWyav-XeW2I78SYfS0AxEE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
