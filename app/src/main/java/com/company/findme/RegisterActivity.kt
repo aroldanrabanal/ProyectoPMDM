@@ -42,17 +42,20 @@ class RegisterActivity : AppCompatActivity() {
     private fun registrarUsuario(email: String, password: String, nombre: String) {
         auth.createUserWithEmailAndPassword(email, password)
             .addOnSuccessListener {
-                val uid = auth.currentUser!!.uid
-
+                val user = auth.currentUser!!.uid
+                if (user == null) {
+                    Toast.makeText(this, "Error inesperado", Toast.LENGTH_LONG).show()
+                    return@addOnSuccessListener
+                }
                 val usuario = hashMapOf(
-                    "uid" to uid,
+                    "uid" to user,
                     "nombre" to nombre,
                     "email" to email,
                     "online" to true,
                     "ultimoAcceso" to System.currentTimeMillis()
                 )
 
-                db.collection("usuarios").document(uid).set(usuario)
+                db.collection("usuarios").document(user).set(usuario)
                     .addOnSuccessListener {
                         Toast.makeText(this, "¡Bienvenido $nombre!", Toast.LENGTH_LONG).show()
                         irAMain()
