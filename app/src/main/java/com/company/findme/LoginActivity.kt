@@ -21,11 +21,11 @@ class LoginActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         // Si ya está logueado → directo a Main
-        //if (auth.currentUser != null) {
-        //    actualizarEstadoYEntrar()
-        //    return
-        //}
-//
+        if (auth.currentUser != null) {
+            actualizarEstadoYEntrar()
+            return
+        }
+
         binding.btnLogin.setOnClickListener {
             val email = binding.etEmail.text.toString().trim()
             val pass = binding.etPassword.text.toString().trim()

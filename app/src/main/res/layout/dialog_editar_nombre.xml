@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="24dp"
+    android:background="#1E1E1E">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Nuevo nombre"
+        android:textColor="#BB86FC"
+        android:textSize="14sp"
+        android:layout_marginBottom="8dp"/>
+
+    <!-- EditText normal, pero con estilo Material bonito -->
+    <EditText
+        android:id="@+id/etNuevoNombre"
+        android:layout_width="match_parent"
+        android:layout_height="56dp"
+        android:background="@drawable/edittext_material_background"
+        android:paddingStart="16dp"
+        android:paddingEnd="16dp"
+        android:textColor="#FFFFFF"
+        android:textColorHint="#888888"
+        android:hint="Escribe tu nombre"
+        android:inputType="textPersonName"
+        android:maxLines="1"
+        android:textSize="16sp"/>
+
+</LinearLayout>

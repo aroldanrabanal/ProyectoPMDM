@@ -16,14 +16,13 @@ import com.google.firebase.auth.auth
 import com.google.firebase.firestore.firestore
 
 
-class MainActivity : AppCompatActivity() {  // ← Corregido: la clase va aquí, no indentada
+class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        // ← PROTECCIÓN: Si no está logueado, ve al Login
         if (Firebase.auth.currentUser == null) {
             startActivity(Intent(this, LoginActivity::class.java))
             finish()
@@ -46,7 +45,23 @@ class MainActivity : AppCompatActivity() {  // ← Corregido: la clase va aquí,
         setupActionBarWithNavController(navController, appBarConfiguration)
         navView.setupWithNavController(navController)
 
-        // Prueba de Firestore (borra esto después de confirmar que funciona)
+        binding.tvNombreUsuario.text = "Cargando..."
+
+        Firebase.auth.currentUser?.let { user ->
+            Firebase.firestore.collection("usuarios").document(user.uid)
+                .get()
+                .addOnSuccessListener { doc ->
+                    val nombre = doc.getString("nombre") ?: "Usuario"
+                    binding.tvNombreUsuario.text = nombre
+                }
+        }
+
+        binding.headerPerfil.setOnClickListener {
+            if (this !is PerfilActivity) {
+                startActivity(Intent(this, PerfilActivity::class.java))
+            }
+        }
+
         probarConexionFirestore()
     }
 
