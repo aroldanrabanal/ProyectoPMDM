@@ -32,16 +32,17 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        // Configuración del Navigation Component
-        setSupportActionBar(binding.toolbar)
         val navController = findNavController(R.id.nav_host_fragment_activity_main)
         val appBarConfiguration = AppBarConfiguration(
             setOf(R.id.navigation_home, R.id.navigation_dashboard, R.id.navigation_notifications)
         )
-        setupActionBarWithNavController(navController, appBarConfiguration)
         binding.navView.setupWithNavController(navController)
 
-        // CARGAR NOMBRE + FOTO DE PERFIL EN TIEMPO REAL
+        binding.headerPerfil.setOnClickListener {
+            startActivity(Intent(this, PerfilActivity::class.java))
+        }
+        binding.navView.setupWithNavController(navController)
+
         Firebase.auth.currentUser?.let { user ->
             Firebase.firestore.collection("usuarios").document(user.uid)
                 .addSnapshotListener { doc, error ->
@@ -72,7 +73,6 @@ class MainActivity : AppCompatActivity() {
                 }
         }
 
-        // Click en el header → ir a Perfil
         binding.headerPerfil.setOnClickListener {
             startActivity(Intent(this, PerfilActivity::class.java))
         }
