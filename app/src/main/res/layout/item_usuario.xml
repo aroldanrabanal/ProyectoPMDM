@@ -19,13 +19,13 @@
         <!-- Imagen con bordes redondeados -->
         <com.google.android.material.imageview.ShapeableImageView
             android:id="@+id/ivFoto"
-            android:layout_width="80dp"
-            android:layout_height="80dp"
+            android:layout_width="75dp"
+            android:layout_height="75dp"
             android:scaleType="centerCrop"
             android:src="@drawable/ic_person"
             app:shapeAppearanceOverlay="@style/roundedCornerShape"
             app:strokeColor="#6200EE"
-            app:strokeWidth="2dp" />
+            app:strokeWidth="3dp" />
 
         <!-- Usamos GridLayout para un control preciso de la posición -->
         <androidx.gridlayout.widget.GridLayout
