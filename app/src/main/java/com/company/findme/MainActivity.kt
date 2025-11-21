@@ -10,10 +10,12 @@ import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import com.bumptech.glide.Glide
+import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.company.findme.databinding.ActivityMainBinding
 import com.google.firebase.Firebase
 import com.google.firebase.auth.auth
 import com.google.firebase.firestore.firestore
+import com.google.firebase.messaging.messaging
 
 class MainActivity : AppCompatActivity() {
 
@@ -22,11 +24,16 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        // Si no hay usuario logueado → Login
         if (Firebase.auth.currentUser == null) {
             startActivity(Intent(this, LoginActivity::class.java))
             finish()
             return
+        }
+        Firebase.messaging.token.addOnSuccessListener { token ->
+            Firebase.auth.currentUser?.let { user ->
+                Firebase.firestore.collection("usuarios").document(user.uid)
+                    .update("fcmToken", token)
+            }
         }
 
         binding = ActivityMainBinding.inflate(layoutInflater)
@@ -55,15 +62,15 @@ class MainActivity : AppCompatActivity() {
                         val nombre = doc.getString("nombre") ?: "Usuario"
                         val fotoUrl = doc.getString("fotoPerfil")
 
-                        // Actualizar nombre
                         binding.tvNombreUsuario.text = nombre
 
-                        // Actualizar foto con Glide
                         if (!fotoUrl.isNullOrEmpty()) {
                             Glide.with(this@MainActivity)
                                 .load(fotoUrl)
                                 .placeholder(R.drawable.ic_person)
                                 .error(R.drawable.ic_person)
+                                .diskCacheStrategy(DiskCacheStrategy.NONE)
+                                .skipMemoryCache(true)
                                 .circleCrop()
                                 .into(binding.ivFotoPerfil)
                         } else {

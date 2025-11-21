@@ -17,6 +17,7 @@ import com.google.firebase.Firebase
 import com.google.firebase.auth.auth
 import com.google.firebase.firestore.firestore
 import androidx.lifecycle.lifecycleScope
+import com.bumptech.glide.load.engine.DiskCacheStrategy
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import kotlinx.coroutines.launch
@@ -76,11 +77,12 @@ class PerfilActivity : AppCompatActivity() {
                     binding.tvNombre.text = nombre
                     binding.tvEmail.text = email
 
-                    // CARGAR FOTO CON GLIDE (ShapeableImageView)
                     if (!fotoUrl.isNullOrEmpty()) {
                         Glide.with(this)
                             .load(fotoUrl)
                             .placeholder(R.drawable.ic_person)
+                            .diskCacheStrategy(DiskCacheStrategy.NONE)
+                            .skipMemoryCache(true)
                             .error(R.drawable.ic_person)
                             .into(binding.ivFotoPerfilGrande)
                     } else {
@@ -111,10 +113,11 @@ class PerfilActivity : AppCompatActivity() {
             val options = ObjectUtils.asMap(
                 "folder", "findme_perfiles",
                 "public_id", "${user.uid}_perfil",
+                "overwrite", true,
+                "invalidate", true,
                 "upload_preset", "android"
             )
 
-            // ← SUBIR COMO BYTES (nunca falla)
             val result = withContext(Dispatchers.IO) {
                 cloudinary.uploader().upload(bytes, options)
             }
