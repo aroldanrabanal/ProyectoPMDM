@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <!-- HEADER PERSONALIZADO (foto + nombre) -->
+    <!-- TU HEADER PERSONALIZADO (foto + nombre) -->
     <LinearLayout
         android:id="@+id/headerPerfil"
         android:layout_width="match_parent"
@@ -18,8 +18,7 @@
         android:paddingEnd="16dp"
         android:clickable="true"
         android:focusable="true"
-        android:foreground="?android:attr/selectableItemBackground"
-        android:layout_marginTop="?attr/actionBarSize">
+        android:foreground="?android:attr/selectableItemBackground">
 
         <com.google.android.material.imageview.ShapeableImageView
             android:id="@+id/ivFotoPerfil"
@@ -51,16 +50,17 @@
             app:tint="#AAAAAA" />
     </LinearLayout>
 
-    <!-- Toolbar oficial (necesario para Navigation Component) -->
+    <!-- Toolbar oficial (OCULTO, solo para Navigation Component) -->
     <com.google.android.material.appbar.AppBarLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:visibility="gone">  <!-- ¡¡OCULTO!! -->
+
         <androidx.appcompat.widget.Toolbar
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
-            android:background="#1E1E1E"
-            app:titleTextColor="#FFFFFF"/>
+            android:background="#1E1E1E" />
     </com.google.android.material.appbar.AppBarLayout>
 
     <!-- Fragment Container -->
@@ -71,9 +71,7 @@
         android:layout_height="match_parent"
         app:defaultNavHost="true"
         app:navGraph="@navigation/mobile_navigation"
-        app:layout_constraintTop_toBottomOf="@id/headerPerfil"
-        app:layout_constraintBottom_toTopOf="@id/nav_view"
-        android:layout_marginTop="70dp" />
+        android:layout_marginTop="70dp" />  <!-- 70dp = altura del header -->
 
     <!-- Bottom Navigation -->
     <com.google.android.material.bottomnavigation.BottomNavigationView
