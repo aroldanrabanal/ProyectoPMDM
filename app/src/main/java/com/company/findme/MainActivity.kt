@@ -6,6 +6,7 @@ import android.util.Log
 import android.widget.Toast
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.Toolbar
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupActionBarWithNavController
@@ -14,6 +15,7 @@ import com.company.findme.databinding.ActivityMainBinding
 import com.google.firebase.Firebase
 import com.google.firebase.auth.auth
 import com.google.firebase.firestore.firestore
+
 
 
 class MainActivity : AppCompatActivity() {
@@ -33,7 +35,7 @@ class MainActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         val navView: BottomNavigationView = binding.navView
-
+        setSupportActionBar(binding.toolbar)
         val navController = findNavController(R.id.nav_host_fragment_activity_main)
         val appBarConfiguration = AppBarConfiguration(
             setOf(
@@ -42,15 +44,21 @@ class MainActivity : AppCompatActivity() {
                 R.id.navigation_notifications
             )
         )
-
-        binding.tvNombreUsuario.text = "Cargando..."
+        setupActionBarWithNavController(navController, appBarConfiguration)
+        navView.setupWithNavController(navController)
 
         Firebase.auth.currentUser?.let { user ->
             Firebase.firestore.collection("usuarios").document(user.uid)
-                .get()
-                .addOnSuccessListener { doc ->
-                    val nombre = doc.getString("nombre") ?: "Usuario"
-                    binding.tvNombreUsuario.text = nombre
+                .addSnapshotListener { doc, error ->
+                    if (error != null) {
+                        Log.w("Firestore", "Error escuchando usuario", error)
+                        return@addSnapshotListener
+                    }
+
+                    if (doc != null && doc.exists()) {
+                        val nombre = doc.getString("nombre") ?: "Usuario"
+                        binding.tvNombreUsuario.text = nombre
+                    }
                 }
         }
 
