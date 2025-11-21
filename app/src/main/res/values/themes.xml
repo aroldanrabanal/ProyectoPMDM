@@ -1,24 +1,27 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
 
-    <!-- Usa uno de estos dos parents (elige el que más te guste) -->
-
-    <!-- Opción A: Material 3 completo + compatible con AppCompat (RECOMENDADA 2025) -->
     <style name="Base.Theme.FindMe" parent="Theme.MaterialComponents.DayNight.NoActionBar">
-
-        <!-- Activa Material 3 (esto es lo que hace que se vea moderno) -->
-        <item name="materialThemeOverlay">@style/ThemeOverlay.Material3</item>
-
         <item name="colorPrimary">#6200EE</item>
         <item name="colorPrimaryVariant">#3700B3</item>
         <item name="colorOnPrimary">#FFFFFF</item>
         <item name="colorSecondary">#03DAC6</item>
         <item name="colorSecondaryVariant">#018786</item>
         <item name="colorOnSecondary">#000000</item>
+        <item name="android:statusBarColor">?attr/colorPrimaryVariant</item>
+        <item name="textInputStyle">@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox</item>
+        <item name="editTextStyle">@style/Widget.MaterialComponents.TextInputEditText.OutlinedBox</item>
 
-        <item name="android:statusBarColor">#3700B3</item>
-        <item name="android:windowLightStatusBar">false</item>
+        <item name="materialThemeOverlay">@style/ThemeOverlay.MaterialComponents</item>
+
+        <!-- Status bar -->
+        <item name="android:windowLightStatusBar" tools:targetApi="m">false</item>
     </style>
+    <style name="Theme.FindMe" parent="Base.Theme.FindMe">
 
-    <style name="Theme.FindMe" parent="Base.Theme.FindMe" />
+    </style>
+    <style name="Theme.FindMe.Splash" parent="Theme.Material3.Dark.NoActionBar">
+        <item name="android:windowBackground">#121212</item>
+        <item name="android:statusBarColor">#121212</item>
+    </style>
 
 </resources>

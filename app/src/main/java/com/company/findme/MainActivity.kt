@@ -4,17 +4,16 @@ import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.widget.Toast
-import com.google.android.material.bottomnavigation.BottomNavigationView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
+import com.bumptech.glide.Glide
 import com.company.findme.databinding.ActivityMainBinding
 import com.google.firebase.Firebase
 import com.google.firebase.auth.auth
 import com.google.firebase.firestore.firestore
-
 
 class MainActivity : AppCompatActivity() {
 
@@ -23,6 +22,7 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
+        // Si no hay usuario logueado → Login
         if (Firebase.auth.currentUser == null) {
             startActivity(Intent(this, LoginActivity::class.java))
             finish()
@@ -32,32 +32,49 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        val navView: BottomNavigationView = binding.navView
-
+        // Configuración del Navigation Component
+        setSupportActionBar(binding.toolbar)
         val navController = findNavController(R.id.nav_host_fragment_activity_main)
         val appBarConfiguration = AppBarConfiguration(
-            setOf(
-                R.id.navigation_home,
-                R.id.navigation_dashboard,
-                R.id.navigation_notifications
-            )
+            setOf(R.id.navigation_home, R.id.navigation_dashboard, R.id.navigation_notifications)
         )
+        setupActionBarWithNavController(navController, appBarConfiguration)
+        binding.navView.setupWithNavController(navController)
 
-        binding.tvNombreUsuario.text = "Cargando..."
-
+        // CARGAR NOMBRE + FOTO DE PERFIL EN TIEMPO REAL
         Firebase.auth.currentUser?.let { user ->
             Firebase.firestore.collection("usuarios").document(user.uid)
-                .get()
-                .addOnSuccessListener { doc ->
-                    val nombre = doc.getString("nombre") ?: "Usuario"
-                    binding.tvNombreUsuario.text = nombre
+                .addSnapshotListener { doc, error ->
+                    if (error != null) {
+                        Log.w("Firestore", "Error escuchando usuario", error)
+                        return@addSnapshotListener
+                    }
+
+                    if (doc != null && doc.exists()) {
+                        val nombre = doc.getString("nombre") ?: "Usuario"
+                        val fotoUrl = doc.getString("fotoPerfil")
+
+                        // Actualizar nombre
+                        binding.tvNombreUsuario.text = nombre
+
+                        // Actualizar foto con Glide
+                        if (!fotoUrl.isNullOrEmpty()) {
+                            Glide.with(this@MainActivity)
+                                .load(fotoUrl)
+                                .placeholder(R.drawable.ic_person)
+                                .error(R.drawable.ic_person)
+                                .circleCrop()
+                                .into(binding.ivFotoPerfil)
+                        } else {
+                            binding.ivFotoPerfil.setImageResource(R.drawable.ic_person)
+                        }
+                    }
                 }
         }
 
+        // Click en el header → ir a Perfil
         binding.headerPerfil.setOnClickListener {
-            if (this !is PerfilActivity) {
-                startActivity(Intent(this, PerfilActivity::class.java))
-            }
+            startActivity(Intent(this, PerfilActivity::class.java))
         }
 
         probarConexionFirestore()
@@ -65,7 +82,6 @@ class MainActivity : AppCompatActivity() {
 
     private fun probarConexionFirestore() {
         val db = Firebase.firestore
-
         val datosPrueba = hashMapOf(
             "nombre" to "Prueba de conexión",
             "timestamp" to System.currentTimeMillis(),
@@ -76,25 +92,12 @@ class MainActivity : AppCompatActivity() {
             .document("test_${System.currentTimeMillis()}")
             .set(datosPrueba)
             .addOnSuccessListener {
-                Log.d("Firestore", "¡Conexión exitosa! Documento escrito correctamente")
+                Log.d("Firestore", "¡Conexión exitosa!")
                 Toast.makeText(this, "Firestore conectado ✓", Toast.LENGTH_LONG).show()
-                leerDatosPrueba()
             }
             .addOnFailureListener { e ->
-                Log.w("Firestore", "Error al escribir documento", e)
+                Log.w("Firestore", "Error al escribir", e)
                 Toast.makeText(this, "Error de conexión: ${e.message}", Toast.LENGTH_LONG).show()
-            }
-    }
-
-    private fun leerDatosPrueba() {
-        val db = Firebase.firestore
-        db.collection("pruebas_conexion")
-            .get()
-            .addOnSuccessListener { result ->
-                Log.d("Firestore", "Lectura exitosa. Documentos encontrados: ${result.size()}")
-            }
-            .addOnFailureListener { e ->
-                Log.w("Firestore", "Error al leer", e)
             }
     }
 }

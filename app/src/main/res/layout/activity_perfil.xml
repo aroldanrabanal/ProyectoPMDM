@@ -16,18 +16,43 @@
         android:textColor="#FFFFFF"
         android:layout_marginBottom="40dp"/>
 
-    <!-- Foto de perfil -->
-    <com.google.android.material.imageview.ShapeableImageView
-        android:id="@+id/ivFotoPerfil"
-        android:layout_width="100dp"
-        android:layout_height="100dp"
-        android:src="@drawable/ic_person"
-        app:shapeAppearanceOverlay="@style/CircleImage"
-        android:strokeColor="#6200EE"
-        android:layout_gravity="center"
-        android:layout_marginBottom="24dp"/>
+    <FrameLayout
+        android:id="@+id/frameFotoPerfil"
+        android:layout_width="140dp"
+        android:layout_height="140dp"
+        android:layout_marginTop="32dp"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
 
-    <!-- Nombre + botón editar -->
+        <com.google.android.material.imageview.ShapeableImageView
+            android:id="@+id/ivFotoPerfilGrande"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scaleType="centerCrop"
+            android:src="@drawable/ic_person"
+            app:shapeAppearanceOverlay="@style/CircleImage"
+            app:strokeColor="#6200EE"
+            app:strokeWidth="4dp" />
+
+        <View
+            android:id="@+id/overlayFoto"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="#80000000"
+            android:alpha="0" />
+
+        <ImageView
+            android:id="@+id/ivIconoCamara"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:layout_gravity="center"
+            android:src="@android:drawable/ic_menu_camera"
+            android:alpha="0"
+            app:tint="#FFFFFF" />
+
+    </FrameLayout>
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

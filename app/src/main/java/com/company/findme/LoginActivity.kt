@@ -20,7 +20,6 @@ class LoginActivity : AppCompatActivity() {
         binding = ActivityLoginBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        // Si ya está logueado → directo a Main
         if (auth.currentUser != null) {
             actualizarEstadoYEntrar()
             return
