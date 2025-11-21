@@ -6,6 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+    <!-- HEADER PERSONALIZADO (foto + nombre) -->
     <LinearLayout
         android:id="@+id/headerPerfil"
         android:layout_width="match_parent"
@@ -27,7 +28,8 @@
             android:src="@drawable/ic_person"
             app:shapeAppearanceOverlay="@style/CircleImage"
             app:strokeColor="#6200EE"
-            app:strokeWidth="2dp"
+            app:strokeWidth="3dp"
+            android:scaleType="centerCrop"
             android:layout_marginEnd="12dp"/>
 
         <TextView
@@ -48,21 +50,18 @@
             android:src="@android:drawable/ic_menu_manage"
             app:tint="#AAAAAA" />
     </LinearLayout>
-    <!-- Toolbar oficial (la necesita Navigation Component) -->
+
+    <!-- Toolbar oficial (necesario para Navigation Component) -->
     <com.google.android.material.appbar.AppBarLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
-
         <androidx.appcompat.widget.Toolbar
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
             android:background="#1E1E1E"
-            app:titleTextColor="#FFFFFF"
-             />
+            app:titleTextColor="#FFFFFF"/>
     </com.google.android.material.appbar.AppBarLayout>
-
-
 
     <!-- Fragment Container -->
     <fragment
