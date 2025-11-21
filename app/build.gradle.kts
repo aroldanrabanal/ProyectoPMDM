@@ -46,6 +46,7 @@ dependencies {
     implementation("com.cloudinary:cloudinary-android:3.1.2")
     implementation("com.cloudinary:cloudinary-core:1.37.0")
     implementation("com.github.bumptech.glide:glide:4.16.0")
+    implementation(libs.androidx.gridlayout)
     annotationProcessor("com.github.bumptech.glide:compiler:4.16.0")
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.8.1")
     implementation(libs.androidx.core.ktx)

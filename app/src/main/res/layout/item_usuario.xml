@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.google.android.material.card.MaterialCardView
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<com.google.android.material.card.MaterialCardView    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
@@ -17,53 +16,85 @@
         android:padding="16dp"
         android:gravity="center_vertical">
 
+        <!-- Imagen con bordes redondeados -->
         <com.google.android.material.imageview.ShapeableImageView
             android:id="@+id/ivFoto"
-            android:layout_width="70dp"
-            android:layout_height="70dp"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:scaleType="centerCrop"
             android:src="@drawable/ic_person"
             app:shapeAppearanceOverlay="@style/roundedCornerShape"
             app:strokeColor="#6200EE"
-            app:strokeWidth="3dp"
-            android:scaleType="centerCrop"/>
+            app:strokeWidth="2dp" />
 
-        <LinearLayout
+        <!-- Usamos GridLayout para un control preciso de la posición -->
+        <androidx.gridlayout.widget.GridLayout
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:orientation="vertical"
-            android:layout_marginStart="16dp">
+            android:layout_marginStart="16dp"
+            app:columnCount="2">
 
+            <!-- Fila 0, Columna 0: Nombre -->
             <TextView
                 android:id="@+id/tvNombre"
-                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_width="wrap_content"
                 android:text="Nombre Apellido"
                 android:textSize="18sp"
                 android:textStyle="bold"
-                android:textColor="#000000"/>
+                android:textColor="#000000"
+                app:layout_row="0"
+                app:layout_column="0"
+                app:layout_columnSpan="2" />
 
+            <!-- Fila 1, Columna 0: Estado -->
             <TextView
                 android:id="@+id/tvEstado"
-                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_width="wrap_content"
                 android:text="En línea"
                 android:textSize="14sp"
                 android:textColor="#BB86FC"
-                android:layout_marginTop="4dp"/>
+                android:layout_marginTop="4dp"
+                app:layout_row="1"
+                app:layout_column="0" />
 
+            <Space
+                app:layout_column="1"
+                app:layout_gravity="fill"
+                app:layout_row="1" />
+
+            <!-- Fila 2, Columna 0: Cercanía -->
+            <TextView
+                android:id="@+id/tvCercania"
+                android:layout_height="wrap_content"
+                android:layout_width="wrap_content"
+                android:text="A 50 metros"
+                android:textSize="14sp"
+                android:textColor="#BB86FC"
+                android:layout_marginTop="4dp"
+                app:layout_row="2"
+                app:layout_column="0"
+                app:layout_gravity="top" />
+
+            <!-- Fila 3, Columna 1: Botón Añadir -->
             <Button
                 android:id="@+id/btnAgregar"
                 style="@style/Widget.Material3.Button.OutlinedButton"
-                android:layout_width="wrap_content"
                 android:layout_height="40dp"
+                android:layout_width="wrap_content"
                 android:text="Añadir"
                 android:textSize="14sp"
                 app:icon="@android:drawable/ic_input_add"
                 app:iconTint="#6200EE"
-                app:strokeColor="#6200EE" />
-        </LinearLayout>
+                app:strokeColor="#6200EE"
+                android:layout_marginTop="8dp"
+                app:layout_row="2"
+                app:layout_column="1"
+                app:layout_gravity="end" />
 
+        </androidx.gridlayout.widget.GridLayout>
 
     </LinearLayout>
 </com.google.android.material.card.MaterialCardView>
