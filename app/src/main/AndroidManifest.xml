@@ -34,6 +34,10 @@
             android:name=".PerfilActivity"
             android:exported="false" />
 
+        <activity
+            android:name=".HobbiesActivity"
+            android:exported="false" />
+
     </application>
 
 </manifest>

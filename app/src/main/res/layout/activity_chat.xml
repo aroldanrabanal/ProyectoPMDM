@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#F5F5F5">
+
+    <!-- HEADER PERSONALIZADO (arriba fijo) -->
+    <LinearLayout
+        android:id="@+id/headerChat"
+        android:layout_width="match_parent"
+        android:layout_height="70dp"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:background="#1E1E1E"
+        android:paddingStart="16dp"
+        android:paddingEnd="8dp"
+        android:elevation="4dp">
+
+        <!-- Foto de perfil del amigo -->
+        <com.google.android.material.imageview.ShapeableImageView
+            android:id="@+id/ivFotoPerfil"
+            android:layout_width="44dp"
+            android:layout_height="44dp"
+            android:src="@drawable/ic_person"
+            app:shapeAppearanceOverlay="@style/CircleImage"
+            app:strokeColor="#6200EE"
+            app:strokeWidth="2dp"
+            android:scaleType="centerCrop"
+            android:layout_marginEnd="12dp"/>
+
+        <!-- Nombre del amigo -->
+        <TextView
+            android:id="@+id/tvNombreUsuario"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Amigo"
+            android:textColor="#FFFFFF"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:ellipsize="end"
+            android:maxLines="1"/>
+
+        <!-- Aquí puedes añadir menú de tres puntos si quieres más adelante -->
+    </LinearLayout>
+
+    <!-- RecyclerView de los mensajes -->
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerChat"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/headerChat"
+        android:layout_above="@+id/barraEscritura"
+        android:padding="8dp"
+        android:clipToPadding="false"
+        android:background="#F5F5F5"/>
+
+    <!-- Barra inferior de escritura -->
+    <LinearLayout
+        android:id="@+id/barraEscritura"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:background="#FFFFFF"
+        android:padding="10dp"
+        android:gravity="center_vertical"
+        android:layout_alignParentBottom="true"
+        android:elevation="8dp"
+        android:translationZ="8dp">
+
+        <!-- Campo de texto -->
+        <EditText
+            android:id="@+id/editTextMensaje"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:hint="Escribe un mensaje..."
+            android:padding="14dp"
+            android:maxLines="6"
+            android:textColor="#000000"
+            android:textSize="16sp"
+            android:imeOptions="actionSend"
+            android:inputType="textCapSentences|textMultiLine"/>
+
+        <!-- Botón enviar -->
+        <ImageButton
+            android:id="@+id/buttonEnviar"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:src="@android:drawable/ic_menu_send"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:contentDescription="Enviar"
+            app:tint="#2196F3"
+            android:layout_marginStart="8dp"
+            android:scaleType="centerInside"/>
+    </LinearLayout>
+
+</RelativeLayout>

@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <!-- TU HEADER PERSONALIZADO (foto + nombre) -->
+    <!-- HEADER PERSONALIZADO -->
     <LinearLayout
         android:id="@+id/headerPerfil"
         android:layout_width="match_parent"
@@ -15,10 +15,9 @@
         android:orientation="horizontal"
         android:gravity="center_vertical"
         android:paddingStart="16dp"
-        android:paddingEnd="16dp"
+        android:paddingEnd="8dp"
         android:clickable="true"
-        android:focusable="true"
-        android:foreground="?android:attr/selectableItemBackground">
+        android:focusable="true">
 
         <com.google.android.material.imageview.ShapeableImageView
             android:id="@+id/ivFotoPerfil"
@@ -43,11 +42,8 @@
             android:ellipsize="end"
             android:maxLines="1"/>
 
-        <ImageView
-            android:layout_width="24dp"
-            android:layout_height="24dp"
-            android:src="@android:drawable/ic_menu_manage"
-            app:tint="#AAAAAA" />
+        <!-- ICONO DE MÁS OPCIONES (tres puntitos) -->
+
     </LinearLayout>
 
     <!-- Toolbar oficial (OCULTO, solo para Navigation Component) -->
